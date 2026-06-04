@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #f6f1e7;
+  --ink: #1f2327;
+  --ink-strong: #101316;
+  --muted: #5c666f;
+  --panel: #ffffff;
+  --panel-soft: #f0ece3;
+  --line: rgba(17, 22, 28, 0.12);
+  --line-strong: rgba(17, 22, 28, 0.2);
+  --accent-strong: #2a7d67;
+  --paper: #fefcf7;
+  --paper-soft: rgba(254, 252, 247, 0.7);
+}
+
+@theme inline {
+  --color-background: var(--canvas);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-work-sans);
+  --font-display: var(--font-playfair);
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-playfair), "Times New Roman", serif;
+}
+
+.field {
+  width: 100%;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: white;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 3px rgba(42, 125, 103, 0.18);
+}
+
+.field-dark {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--paper);
+}
+
+.field-dark:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.button-primary {
+  border-radius: 999px;
+  background: var(--ink-strong);
+  color: var(--paper);
+  padding: 0.75rem 1.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(17, 22, 28, 0.2);
+}
+
+.button-secondary {
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: white;
+  color: var(--ink-strong);
+  padding: 0.7rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.button-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-strong);
+}
+
+.button-ghost {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 0.35rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-strong);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.button-ghost:hover {
+  border-color: var(--line-strong);
+  background: var(--panel-soft);
+}
+
+.notice {
+  border-radius: 1.5rem;
+  background: var(--panel-soft);
+  padding: 1rem 1.4rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.notice-error {
+  border-radius: 1.5rem;
+  background: rgba(220, 38, 38, 0.12);
+  padding: 1rem 1.4rem;
+  font-size: 0.95rem;
+  color: #b91c1c;
+}
