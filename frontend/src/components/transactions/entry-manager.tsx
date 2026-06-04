@@ -45,10 +45,13 @@ export function EntryManager({ kind }: EntryManagerProps) {
     setError(null);
 
     try {
-      const [nextCategories, nextItems] = await Promise.all([
+      const [categoriesResult, itemsResult] = await Promise.allSettled([
         getCategories(kind),
         kind === "income" ? getIncome(monthKey) : getExpenses(monthKey),
       ]);
+
+      const nextCategories = categoriesResult.status === "fulfilled" ? categoriesResult.value : [];
+      const nextItems = itemsResult.status === "fulfilled" ? itemsResult.value : [];
 
       setCategories(nextCategories);
       setItems(nextItems);
@@ -56,6 +59,19 @@ export function EntryManager({ kind }: EntryManagerProps) {
         ...current,
         categoryId: current.categoryId || nextCategories[0]?.id || "",
       }));
+
+      if (categoriesResult.status === "rejected" || itemsResult.status === "rejected") {
+        const message =
+          categoriesResult.status === "rejected"
+            ? categoriesResult.reason instanceof Error
+              ? categoriesResult.reason.message
+              : "Unable to load categories."
+            : itemsResult.reason instanceof Error
+              ? itemsResult.reason.message
+              : `Unable to load ${title.toLowerCase()}.`;
+
+        setError(message);
+      }
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : `Unable to load ${title.toLowerCase()}.`);
     } finally {
