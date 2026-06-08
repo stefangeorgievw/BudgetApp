@@ -148,9 +148,11 @@ type MetricCardProps = {
 
 function MetricCard({ label, value, accent }: MetricCardProps) {
   return (
-    <div className="rounded-[1.5rem] bg-white/8 p-4">
+    <div className="min-w-0 rounded-[1.5rem] bg-white/8 p-4">
       <p className="text-xs uppercase tracking-[0.22em] text-[var(--paper-soft)]">{label}</p>
-      <p className={`mt-3 text-3xl font-semibold ${accent}`}>{value}</p>
+      <p className={`mt-3 text-[clamp(1.25rem,3vw,1.875rem)] leading-tight font-semibold [overflow-wrap:anywhere] ${accent}`}>
+        {value}
+      </p>
     </div>
   );
 }
