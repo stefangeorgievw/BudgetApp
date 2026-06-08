@@ -47,3 +47,14 @@ export type MonthlyReport = {
     total: number;
   }>;
 };
+
+export type DailyReport = {
+  date: string;
+  totalIncome: number;
+  totalExpenses: number;
+  netBalance: number;
+  expenseBreakdown: Array<{
+    categoryName: string;
+    total: number;
+  }>;
+};

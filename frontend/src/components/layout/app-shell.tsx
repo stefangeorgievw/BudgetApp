@@ -5,7 +5,8 @@ const navigation = [
   { href: "/", label: "Dashboard", accent: "Balance" },
   { href: "/income", label: "Income", accent: "Cash in" },
   { href: "/expenses", label: "Expenses", accent: "Cash out" },
-  { href: "/reports", label: "Reports", accent: "Monthly view" },
+  { href: "/reports/monthly", label: "Monthly report", accent: "Month view" },
+  { href: "/reports/daily", label: "Daily report", accent: "Day view" },
 ];
 
 type AppShellProps = {
@@ -50,15 +51,6 @@ export function AppShell({ title, description, children }: AppShellProps) {
               </Link>
             ))}
           </nav>
-
-          <div className="mt-6 rounded-[1.5rem] bg-[var(--ink-strong)] p-4 text-[var(--paper)]">
-            <p className="text-xs uppercase tracking-[0.3em] text-[var(--paper-soft)]">
-              MVP focus
-            </p>
-            <p className="mt-3 text-sm leading-6 text-[var(--paper-soft)]">
-              Income, expenses, and monthly reports are wired first so the data loop stays simple.
-            </p>
-          </div>
         </aside>
 
         <main className="flex-1 rounded-[2rem] border border-white/60 bg-white/80 p-5 shadow-[0_30px_80px_rgba(35,38,45,0.1)] backdrop-blur md:p-8">

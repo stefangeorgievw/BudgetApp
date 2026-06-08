@@ -1,5 +1,6 @@
 import {
   Category,
+  DailyReport,
   EntryKind,
   ExpenseEntry,
   IncomeEntry,
@@ -39,6 +40,10 @@ async function apiRequest<T>(path: string, init?: RequestInit): Promise<T> {
 function toQuery(monthKey: string): string {
   const [year, month] = monthKey.split("-");
   return `year=${year}&month=${month}`;
+}
+
+function toDateQuery(date: string): string {
+  return `date=${date}`;
 }
 
 export async function getCategories(kind: EntryKind): Promise<Category[]> {
@@ -126,6 +131,10 @@ export async function deleteExpense(id: string) {
 
 export async function getMonthlyReport(monthKey: string): Promise<MonthlyReport> {
   return apiRequest<MonthlyReport>(`/api/reports/monthly?${toQuery(monthKey)}`);
+}
+
+export async function getDailyReport(date: string): Promise<DailyReport> {
+  return apiRequest<DailyReport>(`/api/reports/daily?${toDateQuery(date)}`);
 }
 
 export function formatCurrency(value: number): string {

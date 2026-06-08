@@ -1,13 +1,5 @@
-import { AppShell } from "@/components/layout/app-shell";
-import { ReportOverview } from "@/components/reports/report-overview";
+import { redirect } from "next/navigation";
 
 export default function ReportsPage() {
-  return (
-    <AppShell
-      title="Reports"
-      description="Read the month in totals and category breakdowns before moving on."
-    >
-      <ReportOverview />
-    </AppShell>
-  );
+  redirect("/reports/monthly");
 }
