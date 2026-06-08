@@ -23,7 +23,6 @@ public static class IncomeEndpoints
 
             var items = await query
                 .OrderByDescending(entry => entry.ReceivedOn)
-                .ThenByDescending(entry => entry.Amount)
                 .Select(entry => new IncomeItemDto(
                     entry.Id,
                     entry.Amount,
@@ -33,6 +32,11 @@ public static class IncomeEndpoints
                     entry.CategoryId,
                     entry.Category != null ? entry.Category.Name : string.Empty))
                 .ToListAsync(cancellationToken);
+
+            items = items
+                .OrderByDescending(entry => entry.ReceivedOn)
+                .ThenByDescending(entry => entry.Amount)
+                .ToList();
 
             return Results.Ok(items);
         })

@@ -26,8 +26,11 @@ public static class ReportEndpoints
                 .Where(entry => entry.SpentOn.Year == reportYear && entry.SpentOn.Month == reportMonth)
                 .GroupBy(entry => entry.Category != null ? entry.Category.Name : "Uncategorized")
                 .Select(group => new CategoryBreakdownDto(group.Key, group.Sum(item => item.Amount)))
-                .OrderByDescending(item => item.Total)
                 .ToListAsync(cancellationToken);
+
+            expenseBreakdown = expenseBreakdown
+                .OrderByDescending(item => item.Total)
+                .ToList();
 
             var totalIncome = incomeEntries.Sum(entry => entry.Amount);
             var totalExpenses = expenseBreakdown.Sum(item => item.Total);

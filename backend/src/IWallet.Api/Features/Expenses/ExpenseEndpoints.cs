@@ -23,7 +23,6 @@ public static class ExpenseEndpoints
 
             var items = await query
                 .OrderByDescending(entry => entry.SpentOn)
-                .ThenByDescending(entry => entry.Amount)
                 .Select(entry => new ExpenseItemDto(
                     entry.Id,
                     entry.Amount,
@@ -33,6 +32,11 @@ public static class ExpenseEndpoints
                     entry.CategoryId,
                     entry.Category != null ? entry.Category.Name : string.Empty))
                 .ToListAsync(cancellationToken);
+
+            items = items
+                .OrderByDescending(entry => entry.SpentOn)
+                .ThenByDescending(entry => entry.Amount)
+                .ToList();
 
             return Results.Ok(items);
         })
