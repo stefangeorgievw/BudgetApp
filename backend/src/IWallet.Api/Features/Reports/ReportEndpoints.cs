@@ -20,15 +20,15 @@ public static class ReportEndpoints
                 .Where(entry => entry.ReceivedOn.Year == reportYear && entry.ReceivedOn.Month == reportMonth)
                 .ToListAsync(cancellationToken);
 
-            var expenseBreakdown = await dbContext.ExpenseEntries
+            var expenseEntries = await dbContext.ExpenseEntries
                 .AsNoTracking()
                 .Include(entry => entry.Category)
                 .Where(entry => entry.SpentOn.Year == reportYear && entry.SpentOn.Month == reportMonth)
-                .GroupBy(entry => entry.Category != null ? entry.Category.Name : "Uncategorized")
-                .Select(group => new CategoryBreakdownDto(group.Key, group.Sum(item => item.Amount)))
                 .ToListAsync(cancellationToken);
 
-            expenseBreakdown = expenseBreakdown
+            var expenseBreakdown = expenseEntries
+                .GroupBy(entry => entry.Category != null ? entry.Category.Name : "Uncategorized")
+                .Select(group => new CategoryBreakdownDto(group.Key, group.Sum(item => item.Amount)))
                 .OrderByDescending(item => item.Total)
                 .ToList();
 
