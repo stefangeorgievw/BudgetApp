@@ -1,0 +1,45 @@
+# Root ignore for BudgetApp (.NET backend + Next.js frontend)
+
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+
+# Node / frontend
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/coverage/
+frontend/.vercel/
+frontend/.pnpm-store/
+frontend/.turbo/
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+
+# .NET / backend
+backend/**/bin/
+backend/**/obj/
+backend/**/.vs/
+backend/**/TestResults/
+
+# Local SQLite/dev database files
+backend/**/*.db
+backend/**/*.db-shm
+backend/**/*.db-wal
