@@ -2,6 +2,8 @@
 
 Personal finance tracker with a .NET 8 minimal-API backend and a Next.js 16 frontend.
 
+Use this file as the first-stop operating guide for repo-aware edits. Prefer narrow, behavior-scoped changes and validate the touched slice before widening scope.
+
 ## Architecture
 
 ```
@@ -29,7 +31,26 @@ npm run dev
 
 # Validate backend only
 dotnet build backend/src/IWallet.Api/IWallet.Api.csproj
+
+# Run backend endpoint tests
+dotnet test backend/tests/IWallet.Api.Tests/IWallet.Api.Tests.csproj
+
+# Validate frontend linting
+cd frontend
+npm run lint
+
+# Run frontend e2e tests
+cd frontend
+npm run test:e2e
 ```
+
+## Validation Order
+
+- For backend endpoint or persistence changes, prefer `dotnet test backend/tests/IWallet.Api.Tests/IWallet.Api.Tests.csproj`.
+- For backend-only structural changes without a close test, run `dotnet build backend/src/IWallet.Api/IWallet.Api.csproj`.
+- For frontend component or page changes, prefer `npm run lint` from `frontend/`.
+- For end-to-end UX changes, run `npm run test:e2e` from `frontend/`.
+- Do not default to broad full-stack runs when a narrower check exists.
 
 ## Backend Conventions
 
@@ -47,6 +68,8 @@ dotnet build backend/src/IWallet.Api/IWallet.Api.csproj
 - Nullable reference types are enabled globally (`<Nullable>enable</Nullable>`).
 - Category type must match entry type — an Expense entry requires an Expense category.
 - `DeleteBehavior.Restrict` on all foreign keys (no cascade deletes).
+- App startup calls `EnsureCreatedAsync()` and `DataSeeder.SeedAsync()`; development uses the local SQLite file `backend/src/IWallet.Api/iwallet.dev.db`.
+- CORS is configured for `http://localhost:3000`; keep local frontend/backend defaults aligned unless the task explicitly changes environment wiring.
 
 ## Frontend Conventions
 
@@ -63,6 +86,16 @@ dotnet build backend/src/IWallet.Api/IWallet.Api.csproj
 - The `EntryForm` component is polymorphic — pass `kind: "income" | "expense"` to adapt labels.
 - `NEXT_PUBLIC_API_BASE_URL` defaults to `http://localhost:5100`; override in `.env.local` if needed.
 - All fetch calls use `cache: "no-store"`.
+- Playwright runs from `frontend/tests/` and starts its own Next dev server on `127.0.0.1:3000`.
+- Frontend test automation uses route-mocked API responses; most e2e runs do not require the backend to be running.
+
+## Edit Heuristics
+
+- Keep backend work inside the owning feature slice before touching shared infrastructure.
+- Add or update API calls in `frontend/src/lib/api.ts`; keep page and component files free of ad hoc fetch logic.
+- Update `frontend/src/lib/types.ts` when backend DTO shapes change.
+- Preserve existing naming and sealed-type conventions rather than introducing parallel patterns.
+- Avoid incidental refactors unless they are required to complete the requested change safely.
 
 ## Domain Quick Reference
 
