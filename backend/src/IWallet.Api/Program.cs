@@ -51,3 +51,5 @@ app.MapExpenseEndpoints();
 app.MapReportEndpoints();
 
 app.Run();
+
+public partial class Program;
